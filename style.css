@@ -2,10 +2,9 @@
   font-family: "Inter", sans-serif;
 }
 
-
-
-
-.bbb  {
+.bbb {
   border: 2px solid red;
 }
- 
+.ccc {
+  border: 2px dotted black;
+}
