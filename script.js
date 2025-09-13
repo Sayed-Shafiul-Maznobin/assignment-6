@@ -6,6 +6,7 @@ const loadCategories = () => {
 };
 
 const loadCards = (id) => {
+  manageSpinner(true);
   const url = `https://openapi.programming-hero.com/api/category/${id}`;
   fetch(url)
     .then((res) => res.json())
@@ -16,6 +17,9 @@ const loadCards = (id) => {
 };
 
 const loadAll = () => {
+
+      manageSpinner(true);
+
   const url = `https://openapi.programming-hero.com/api/plants`;
   fetch(url)
     .then((res) => res.json())
@@ -33,6 +37,16 @@ const loadDetails = (id) => {
   // const res = await fetch(url);
   //   const details = await res.json();
   //   displayWordDetails(details.data);
+};
+
+const manageSpinner = (status) => {
+  if (status == true) {
+    document.getElementById("spinner").classList.remove("hidden");
+    document.getElementById("card-container").classList.add("hidden");
+  } else {
+    document.getElementById("spinner").classList.add("hidden");
+    document.getElementById("card-container").classList.remove("hidden");
+  }
 };
 
 //////////////////////////////////////////////////////////////////////
@@ -102,6 +116,7 @@ const displayCards = (cards) => {
           </button>
          `;
     parent.append(child);
+    manageSpinner(false);
   });
 };
 const displayAll = (cards) => {
@@ -138,6 +153,8 @@ const displayAll = (cards) => {
           </button>
          `;
     parent.append(child);
+      manageSpinner(false);
+
   });
 };
 const displayWordDetails = (plant) => {
