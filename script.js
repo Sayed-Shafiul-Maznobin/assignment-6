@@ -21,6 +21,19 @@ const loadAll = () => {
     .then((res) => res.json())
     .then((json) => displayAll(json.plants));
 };
+const loadDetails = (id) => {
+  const url = `https://openapi.programming-hero.com/api/plant/${id}`;
+  fetch(url)
+    .then((res) => res.json())
+    .then((json) => {
+      console.log(json.plants.name);
+      displayWordDetails(json.plants);
+    });
+
+  // const res = await fetch(url);
+  //   const details = await res.json();
+  //   displayWordDetails(details.data);
+};
 
 //////////////////////////////////////////////////////////////////////
 const displayCategories = (lessons) => {
@@ -35,10 +48,8 @@ const displayCategories = (lessons) => {
         >
              All Trees
         </button>
-
-        
-        
-        
+ 
+      
         `;
 
   for (let lesson of lessons) {
@@ -71,7 +82,7 @@ const displayCards = (cards) => {
             src="${card.image}"
             alt=""
           />        
-          <h3    onclick="my_modal_1.showModal()"  class="py-1">${card.name}</h3>
+          <h3    onclick="loadDetails(${card.id})"  class="py-1">${card.name}</h3>
           <p class="text-gray-600   h-[158px] py-1">${card.description}
           </p>
           <div class="flex justify-between py-1">
@@ -107,7 +118,7 @@ const displayAll = (cards) => {
             src="${card.image}"
             alt=""
           />        
-          <h3    onclick="my_modal_1.showModal()"    class="py-1">${card.name}</h3>
+          <h3    onclick="loadDetails(${card.id})"  class="py-1">${card.name}</h3>
           <p class="text-gray-600   h-[158px] py-1">${card.description}
           </p>
           <div class="flex justify-between py-1">
@@ -129,6 +140,47 @@ const displayAll = (cards) => {
     parent.append(child);
   });
 };
+const displayWordDetails = (plant) => {
+  console.log(plant.description);
+  //   console.log(plant.name);
+  //   const name = document.getElementById("heading1");
+  //   name.innerHTML = plant.name;
+
+  const parent = document.getElementById("modal111");
+  parent.innerHTML = "";
+
+  const child = `
+  <dialog id="my_modal_1" class="modal">
+      <div class="modal-box">
+        <h3 id="heading1" class="text-lg font-bold">${plant.name}   </h3>
+        <img class="h-60 w-[450px]"
+          id="image1"
+          src="${plant.image}"
+          alt=""
+        />
+
+        
+         
+        <p class="py-4"><strong> Category: </strong> ${plant.category}    </p>
+        <p class="py-4"><strong> price: </strong> ${plant.price}           </p>
+        <p class="py-4"><strong> Description: </strong>   ${plant.description}       </p>
+
+        <div class="modal-action">
+          <form method="dialog">
+            <!-- if there is a button in form, it will close the modal -->
+            <button class="btn">Close</button>
+          </form>
+        </div>
+      </div>
+    </dialog>
+
+  
+  `;
+  parent.innerHTML = child;
+  const modal = document.getElementById("my_modal_1");
+  modal.showModal();
+};
+
 ////////////////////////////////////////////////////////////////////////
 loadCategories();
 loadAll();
