@@ -1,3 +1,8 @@
+let totalno = 0;
+
+const total = document.getElementById("total");
+total.innerText = totalno;
+
 const loadCategories = () => {
   const url = "https://openapi.programming-hero.com/api/categories";
   fetch(url)
@@ -11,14 +16,14 @@ const loadCards = (id) => {
   fetch(url)
     .then((res) => res.json())
     .then((json) => {
-      const clickBtn = document.getElementById(`   `);
+      const clickBtn = document.getElementById(`${id}`);
       displayCards(json.plants);
     });
+  makeActive();
 };
 
 const loadAll = () => {
-
-      manageSpinner(true);
+  manageSpinner(true);
 
   const url = `https://openapi.programming-hero.com/api/plants`;
   fetch(url)
@@ -30,7 +35,6 @@ const loadDetails = (id) => {
   fetch(url)
     .then((res) => res.json())
     .then((json) => {
-      console.log(json.plants.name);
       displayWordDetails(json.plants);
     });
 
@@ -54,10 +58,10 @@ const displayCategories = (lessons) => {
   const parent = document.getElementById("categoriesParent");
   parent.innerHTML = "";
   parent.innerHTML = `   
-  <h3 class="pl-4 font-bold">Catagories</h3>
+  <h3 class="pl-4 font-bold">Categories</h3>
   
    
-        <button  onclick="loadAll()"
+        <button   onclick="loadAll()"
           class="btn btn-wide hover:text-white hover:bg-[#15803d] bg-transparent border-none flex justify-start"
         >
              All Trees
@@ -109,7 +113,7 @@ const displayCards = (cards) => {
             </div>
             <div class="flex items-center">   ${card.price}     </div>
           </div>
-          <button
+          <button onclick="addtocard()"
             class="my-2 btn btn-block text-white bg-[#15803d] rounded-3xl  "
           >
             Add to Cart
@@ -146,20 +150,17 @@ const displayAll = (cards) => {
             </div>
             <div class="flex items-center">   ${card.price}     </div>
           </div>
-          <button
+          <button onclick="addtocard()"
             class="my-2 btn btn-block text-white bg-[#15803d] rounded-3xl"
           >
             Add to Cart
           </button>
          `;
     parent.append(child);
-      manageSpinner(false);
-
+    manageSpinner(false);
   });
 };
 const displayWordDetails = (plant) => {
-  console.log(plant.description);
-  //   console.log(plant.name);
   //   const name = document.getElementById("heading1");
   //   name.innerHTML = plant.name;
 
@@ -197,7 +198,30 @@ const displayWordDetails = (plant) => {
   const modal = document.getElementById("my_modal_1");
   modal.showModal();
 };
+const addtocard = () => {
+  const parent = document.getElementById("cartContainer");
+  const child = document.createElement("div");
+  child.className =
+    "cart   rounded-xl my-2 px-1 bg-[#f0fdf4] flex justify-between";
+  child.innerHTML = `
+  <div>
+              <div>Mango Tree   </div>
+              <div class="text-gray-400">৳500 x 1</div>
+            </div>
+            <div onclick="remove()" id="remove" class="flex items-center  bbb ">
+              <i class="fa-solid fa-xmark" style="color: #c3c6d1"></i>
+            </div>
+  
+  `;
+  parent.appendChild(child);
+};
 
 ////////////////////////////////////////////////////////////////////////
 loadCategories();
 loadAll();
+
+////////////////////////////////////////////////////////////////////////
+
+const remove = () => {
+  child.innerHTML = "";
+};
