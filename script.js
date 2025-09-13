@@ -208,7 +208,7 @@ const addtocard = () => {
               <div>Mango Tree   </div>
               <div class="text-gray-400">৳500 x 1</div>
             </div>
-            <div onclick="remove()" id="remove" class="flex items-center  bbb ">
+            <div onclick="remove()" id="remove" class="flex items-center    ">
               <i class="fa-solid fa-xmark" style="color: #c3c6d1"></i>
             </div>
   
